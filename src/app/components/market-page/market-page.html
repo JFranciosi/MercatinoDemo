@@ -1,9 +1,96 @@
-<section>
-  <div>
-    <ul>
+<section class="market-section">
+  <div class="market-list-container">
+    <h2>I Nostri Mercatini</h2>
+    <ul class="market-list">
       @for (market of markets; track market.id) {
-      <li>{{ market.title }}</li>
+      <li class="market-item">
+        <a [routerLink]="['/markets', market.id]" class="market-link">{{ market.title }} : {{market.square}} :
+          {{market.theme}}
+        </a>
+      </li>
       }
     </ul>
+
+    <!-- Paginazione -->
+    @if (totalPages > 1) {
+    <div class="pagination-container">
+      <button class="pagination-btn prev-btn" [disabled]="currentPage === 0" (click)="prevPage()">
+        &larr; Precedente
+      </button>
+
+      <div class="pagination-pages">
+        @for (pageNum of getPageNumbers(); track pageNum) {
+        <button class="pagination-btn page-num-btn" [class.active]="pageNum === currentPage"
+          (click)="goToPage(pageNum)">
+          {{ pageNum + 1 }}
+        </button>
+        }
+      </div>
+
+      <button class="pagination-btn next-btn" [disabled]="currentPage === totalPages - 1" (click)="nextPage()">
+        Successivo &rarr;
+      </button>
+    </div>
+    }
+
+    @if (totalElements > 0) {
+    <div class="pagination-info">
+      Visualizzati {{ markets.length }} di {{ totalElements }} mercatini (Pagina {{ currentPage + 1 }} di {{ totalPages
+      }})
+    </div>
+    }
+  </div>
+
+  <div class="market-form-container">
+    <h2>Crea Nuovo Mercatino</h2>
+    <form class="market-form" (ngSubmit)="addMarket()">
+      <div class="form-group">
+        <label for="title">Titolo</label>
+        <input type="text" id="title" name="title" [(ngModel)]="newMarket.title" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descrizione</label>
+        <textarea id="description" name="description" rows="1" [(ngModel)]="newMarket.description" required>
+        </textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="datetime">Data e ora</label>
+        <input type="datetime-local" id="datetime" name="datetime" [(ngModel)]="newMarket.createdAt" required>
+      </div>
+
+      <div class="form-group">
+        <label for="square">Piazza / Luogo</label>
+        <input type="text" id="square" name="square" [(ngModel)]="newMarket.square" required>
+      </div>
+
+      <div class="form-group">
+        <label for="theme">Tema</label>
+        <select id="theme" name="theme" [(ngModel)]="newMarket.theme" required>
+          <option value="" disabled selected>Seleziona un tema</option>
+          <option value="LIBRI">Libri</option>
+          <option value="ABBIGLIAMENTO">Abbigliamento</option>
+          <option value="VINTAGE">Vintage</option>
+          <option value="SVUOTACANTINE">Svuotacantine</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="totalDesks">Banchi Totali</label>
+          <input type="number" id="totalDesks" name="totalDesks" min="1" [(ngModel)]="newMarket.totalDesks" required
+            placeholder="Es. 50">
+        </div>
+
+        <div class="form-group">
+          <label for="assignedDesks">Banchi Assegnati</label>
+          <input type="number" id="assignedDesks" name="assignedDesks" min="0" [(ngModel)]="newMarket.assignedDesks"
+            required placeholder="Es. 0">
+        </div>
+      </div>
+
+      <button type="submit">Crea Mercatino</button>
+    </form>
   </div>
 </section>

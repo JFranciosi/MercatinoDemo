@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Market } from '../types/Market';
+import { Market, PageResponse } from '../types/Market';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({
@@ -11,9 +11,16 @@ export class MarketService {
 
   constructor(private http: HttpClient) { }
 
-  async getMarkets(): Promise<Market[]> {
-    const response = await firstValueFrom(this.http.get<{ content: Market[] }>(this.apiUrl + '/markets'));
-    return response.content;
+  async getMarkets(page: number = 0, size: number = 6): Promise<PageResponse<Market>> {
+    const response = await firstValueFrom(
+      this.http.get<PageResponse<Market>>(`${this.apiUrl}/markets`, {
+        params: {
+          page: page.toString(),
+          size: size.toString()
+        }
+      })
+    );
+    return response;
   }
 
   async getMarketsDetails(id: number): Promise<Market> {
