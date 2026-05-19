@@ -1,20 +1,20 @@
-<section class="market-section">
-  <div class="market-list-container">
+<section>
+  <div>
     <h2>I Nostri Mercatini</h2>
-    <ul class="market-list">
+    <ul>
       @for (market of markets; track market.id) {
-      <li class="market-item">
+      <li>
         @if (editingMarketId === market.id && editingMarket) {
-        <div class="inline-edit-container">
-          <div class="edit-field">
+        <div>
+          <div>
             <label>Titolo</label>
             <input type="text" [(ngModel)]="editingMarket.title" required />
           </div>
-          <div class="edit-field">
+          <div>
             <label>Piazza</label>
             <input type="text" [(ngModel)]="editingMarket.square" required />
           </div>
-          <div class="edit-field">
+          <div>
             <label>Tema</label>
             <select [(ngModel)]="editingMarket.theme" required>
               <option value="LIBRI">Libri</option>
@@ -23,27 +23,27 @@
               <option value="SVUOTACANTINE">Svuotacantine</option>
             </select>
           </div>
-          <div class="edit-field">
+          <div>
             <label>Banchi Totali</label>
             <input type="number" [(ngModel)]="editingMarket.totalDesks" required />
           </div>
-          <div class="edit-field">
+          <div>
             <label>Banchi Assegnati</label>
             <input type="number" [(ngModel)]="editingMarket.assignedDesks" required />
           </div>
-          <div class="inline-edit-actions">
-            <button type="button" class="btn-save" (click)="saveEdit()">Salva</button>
-            <button type="button" class="btn-cancel" (click)="cancelEdit()">Annulla</button>
+          <div>
+            <button type="button" (click)="saveEdit()">Salva</button>
+            <button type="button" (click)="cancelEdit()">Annulla</button>
           </div>
         </div>
         } @else {
         <div class="market-item-content">
-          <a [routerLink]="['/markets', market.id]" class="market-link">
+          <a [routerLink]="['/markets', market.id]">
             {{ market.title }} : {{ market.square }} : {{ market.theme }} : {{ market.createdAt }}
           </a>
-          <div class="market-item-actions">
-            <button type="button" class="btn-edit" (click)="startEdit(market)">Modifica</button>
-            <button type="button" class="btn-delete" (click)="deleteMarket(market.id)">Elimina</button>
+          <div>
+            <button type="button" (click)="startEdit(market)">Modifica</button>
+            <button type="button" (click)="deleteMarket(market.id)">Elimina</button>
           </div>
         </div>
         }
@@ -66,45 +66,45 @@
         }
       </div>
 
-      <button class="pagination-btn next-btn" [disabled]="currentPage === totalPages - 1" (click)="nextPage()">
+      <button [disabled]="currentPage === totalPages - 1" (click)="nextPage()">
         Successivo &rarr;
       </button>
     </div>
     }
 
     @if (totalElements > 0) {
-    <div class="pagination-info">
+    <div>
       Visualizzati {{ markets.length }} di {{ totalElements }} mercatini (Pagina {{ currentPage + 1 }} di {{ totalPages
       }})
     </div>
     }
   </div>
 
-  <div class="market-form-container">
+  <div>
     <h2>Crea Nuovo Mercatino</h2>
-    <form class="market-form" (ngSubmit)="addMarket()">
-      <div class="form-group">
+    <form (ngSubmit)="addMarket()">
+      <div>
         <label for="title">Titolo</label>
         <input type="text" id="title" name="title" [(ngModel)]="newMarket.title" required>
       </div>
 
-      <div class="form-group">
+      <div>
         <label for="description">Descrizione</label>
         <textarea id="description" name="description" rows="1" [(ngModel)]="newMarket.description" required>
         </textarea>
       </div>
 
-      <div class="form-group">
+      <div>
         <label for="datetime">Data e ora</label>
         <input type="datetime-local" id="datetime" name="datetime" [(ngModel)]="newMarket.createdAt" required>
       </div>
 
-      <div class="form-group">
+      <div>
         <label for="square">Piazza / Luogo</label>
         <input type="text" id="square" name="square" [(ngModel)]="newMarket.square" required>
       </div>
 
-      <div class="form-group">
+      <div>
         <label for="theme">Tema</label>
         <select id="theme" name="theme" [(ngModel)]="newMarket.theme" required>
           <option value="" disabled selected>Seleziona un tema</option>
