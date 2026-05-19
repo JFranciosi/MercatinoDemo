@@ -4,9 +4,49 @@
     <ul class="market-list">
       @for (market of markets; track market.id) {
       <li class="market-item">
-        <a [routerLink]="['/markets', market.id]" class="market-link">{{ market.title }} : {{market.square}} :
-          {{market.theme}}
-        </a>
+        @if (editingMarketId === market.id && editingMarket) {
+        <div class="inline-edit-container">
+          <div class="edit-field">
+            <label>Titolo</label>
+            <input type="text" [(ngModel)]="editingMarket.title" required />
+          </div>
+          <div class="edit-field">
+            <label>Piazza</label>
+            <input type="text" [(ngModel)]="editingMarket.square" required />
+          </div>
+          <div class="edit-field">
+            <label>Tema</label>
+            <select [(ngModel)]="editingMarket.theme" required>
+              <option value="LIBRI">Libri</option>
+              <option value="ABBIGLIAMENTO">Abbigliamento</option>
+              <option value="VINTAGE">Vintage</option>
+              <option value="SVUOTACANTINE">Svuotacantine</option>
+            </select>
+          </div>
+          <div class="edit-field">
+            <label>Banchi Totali</label>
+            <input type="number" [(ngModel)]="editingMarket.totalDesks" required />
+          </div>
+          <div class="edit-field">
+            <label>Banchi Assegnati</label>
+            <input type="number" [(ngModel)]="editingMarket.assignedDesks" required />
+          </div>
+          <div class="inline-edit-actions">
+            <button type="button" class="btn-save" (click)="saveEdit()">Salva</button>
+            <button type="button" class="btn-cancel" (click)="cancelEdit()">Annulla</button>
+          </div>
+        </div>
+        } @else {
+        <div class="market-item-content">
+          <a [routerLink]="['/markets', market.id]" class="market-link">
+            {{ market.title }} : {{ market.square }} : {{ market.theme }}
+          </a>
+          <div class="market-item-actions">
+            <button type="button" class="btn-edit" (click)="startEdit(market)">Modifica</button>
+            <button type="button" class="btn-delete" (click)="deleteMarket(market.id)">Elimina</button>
+          </div>
+        </div>
+        }
       </li>
       }
     </ul>
@@ -75,14 +115,14 @@
         </select>
       </div>
 
-      <div class="form-row">
-        <div class="form-group">
+      <div>
+        <div>
           <label for="totalDesks">Banchi Totali</label>
           <input type="number" id="totalDesks" name="totalDesks" min="1" [(ngModel)]="newMarket.totalDesks" required
             placeholder="Es. 50">
         </div>
 
-        <div class="form-group">
+        <div>
           <label for="assignedDesks">Banchi Assegnati</label>
           <input type="number" id="assignedDesks" name="assignedDesks" min="0" [(ngModel)]="newMarket.assignedDesks"
             required placeholder="Es. 0">

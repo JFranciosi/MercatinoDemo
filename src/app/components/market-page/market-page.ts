@@ -20,6 +20,10 @@ export class MarketPage implements OnInit {
   totalPages: number = 0;
   totalElements: number = 0;
 
+  // Edit state
+  editingMarketId: number | null = null;
+  editingMarket: Market | null = null;
+
   newMarket: Omit<Market, 'id'> = {
     title: '',
     description: '',
@@ -93,5 +97,40 @@ export class MarketPage implements OnInit {
       pages.push(i);
     }
     return pages;
+  }
+
+  startEdit(market: Market) {
+    this.editingMarketId = market.id;
+    this.editingMarket = { ...market };
+  }
+
+  cancelEdit() {
+    this.editingMarketId = null;
+    this.editingMarket = null;
+  }
+
+  async saveEdit() {
+    if (!this.editingMarket || this.editingMarketId === null) return;
+    try {
+      await this.marketService.updateMarket(this.editingMarketId, this.editingMarket);
+      await this.loadMarkets();
+      this.cancelEdit();
+    } catch (error) {
+      console.error('Errore durante l\'aggiornamento del mercatino:', error);
+    }
+  }
+
+  async deleteMarket(id: number) {
+    if (confirm('Sei sicuro di voler eliminare questo mercatino?')) {
+      try {
+        await this.marketService.deleteMarket(id);
+        if (this.markets.length === 1 && this.currentPage > 0) {
+          this.currentPage--;
+        }
+        await this.loadMarkets();
+      } catch (error) {
+        console.error('Errore durante l\'eliminazione del mercatino:', error);
+      }
+    }
   }
 }
