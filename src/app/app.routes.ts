@@ -9,7 +9,7 @@ export const routes: Routes = [
         title: 'Mercatini'
     },
     {
-        path: 'dettaglio-mercatino',
+        path: 'markets/:id',
         title: 'Dettaglio Mercatino',
         component: MarketDetails
     },

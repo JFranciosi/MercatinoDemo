@@ -1,1 +1,9 @@
-<p>market-page works!</p>
+<section>
+  <div>
+    <ul>
+      @for (market of markets; track market.id) {
+      <li>{{ market.title }}</li>
+      }
+    </ul>
+  </div>
+</section>
