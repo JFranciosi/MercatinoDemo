@@ -42,4 +42,9 @@ export class MarketService {
     await firstValueFrom(this.http.delete<void>(this.apiUrl + '/markets/' + id));
   }
 
+  async AssignDesks(id: number, deskCount: number): Promise<Market> {
+    const response = await firstValueFrom(this.http.post<Market>(this.apiUrl + '/markets/' + id + '/book-desks', deskCount));
+    return response;
+  }
+
 }

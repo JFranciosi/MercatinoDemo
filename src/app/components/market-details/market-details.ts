@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { MarketService } from '../../services/market-service';
@@ -27,6 +27,14 @@ export class MarketDetails implements OnInit {
       } catch (error) {
         console.error('Errore durante il recupero del mercatino:', error);
       }
+    }
+  }
+
+  async assignDesks(id: number, deskCount: number) {
+    try {
+      this.market = await this.marketService.AssignDesks(id, deskCount);
+    } catch (error) {
+      console.error('Errore durante l\'assegnazione del desk:', error);
     }
   }
 }
