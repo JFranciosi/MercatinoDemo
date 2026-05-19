@@ -39,7 +39,7 @@
         } @else {
         <div class="market-item-content">
           <a [routerLink]="['/markets', market.id]" class="market-link">
-            {{ market.title }} : {{ market.square }} : {{ market.theme }}
+            {{ market.title }} : {{ market.square }} : {{ market.theme }} : {{ market.createdAt }}
           </a>
           <div class="market-item-actions">
             <button type="button" class="btn-edit" (click)="startEdit(market)">Modifica</button>
