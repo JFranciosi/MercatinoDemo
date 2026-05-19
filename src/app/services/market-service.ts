@@ -24,8 +24,8 @@ export class MarketService {
   }
 
   async getMarketsDetails(id: number): Promise<Market> {
-    const response = await firstValueFrom(this.http.get<{ content: Market }>(this.apiUrl + '/markets/' + id));
-    return response.content;
+    const response = await firstValueFrom(this.http.get<Market>(this.apiUrl + '/markets/' + id));
+    return response;
   }
 
   async createMarket(market: Market): Promise<Market> {

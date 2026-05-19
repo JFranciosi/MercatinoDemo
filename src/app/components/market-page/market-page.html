@@ -13,15 +13,14 @@
 
     <!-- Paginazione -->
     @if (totalPages > 1) {
-    <div class="pagination-container">
-      <button class="pagination-btn prev-btn" [disabled]="currentPage === 0" (click)="prevPage()">
+    <div>
+      <button [disabled]="currentPage === 0" (click)="prevPage()">
         &larr; Precedente
       </button>
 
-      <div class="pagination-pages">
+      <div>
         @for (pageNum of getPageNumbers(); track pageNum) {
-        <button class="pagination-btn page-num-btn" [class.active]="pageNum === currentPage"
-          (click)="goToPage(pageNum)">
+        <button [class.active]="pageNum === currentPage" (click)="goToPage(pageNum)">
           {{ pageNum + 1 }}
         </button>
         }

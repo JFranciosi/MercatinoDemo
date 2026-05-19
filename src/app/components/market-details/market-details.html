@@ -1,1 +1,42 @@
-<p>market-details works!</p>
+@if (market) {
+<section>
+    <div>
+        <header>
+            <a routerLink="/markets"> <button>Back to Markets</button> </a>
+            <h1>{{ market.title }}</h1>
+            <span>Theme: </span>
+            <span>{{ market.theme }}</span>
+        </header>
+
+        <div>
+            <div>
+                <h3>Descrizione</h3>
+                <textarea readonly>{{ market.description }}</textarea>
+            </div>
+
+            <div>
+                <h3>Informazioni</h3>
+                <div>
+                    <span>Luogo: </span>
+                    <span>{{ market.square }}</span>
+                </div>
+                <div>
+                    <span>Data Creazione: </span>
+                    <span>{{ market.createdAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+                </div>
+                <div>
+                    <span>Banchi Assegnati: </span>
+                    <span>{{ market.assignedDesks }} / {{ market.totalDesks }}</span>
+                </div>
+                <div>
+                    <div [style.width.%]="(market.assignedDesks / market.totalDesks) * 100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+} @else {
+<div>
+    <p>Caricamento dettagli...</p>
+</div>
+}

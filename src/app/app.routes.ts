@@ -14,7 +14,7 @@ export const routes: Routes = [
         component: MarketDetails
     },
     {
-        path: '',
+        path: '**',
         redirectTo: 'markets',
         pathMatch: 'full'
     }
