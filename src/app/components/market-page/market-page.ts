@@ -47,6 +47,25 @@ export class MarketPage implements OnInit {
     }
   }
 
+  async addMarket() {
+    try {
+      const created = await this.marketService.createMarket(this.newMarket as Market);
+      this.currentPage = 0; // Go to first page to see the new market
+      await this.loadMarkets();
+      this.newMarket = {
+        title: '',
+        description: '',
+        createdAt: new Date().toISOString().slice(0, 16),
+        square: '',
+        theme: undefined as unknown as MarketTheme,
+        totalDesks: 0,
+        assignedDesks: 0
+      };
+    } catch (error) {
+      console.error('Errore durante il salvataggio del mercatino:', error);
+    }
+  }
+
   async goToPage(page: number) {
     if (page >= 0 && page < this.totalPages) {
       this.currentPage = page;
@@ -74,24 +93,5 @@ export class MarketPage implements OnInit {
       pages.push(i);
     }
     return pages;
-  }
-
-  async addMarket() {
-    try {
-      const created = await this.marketService.createMarket(this.newMarket as Market);
-      this.currentPage = 0; // Go to first page to see the new market
-      await this.loadMarkets();
-      this.newMarket = {
-        title: '',
-        description: '',
-        createdAt: new Date().toISOString().slice(0, 16),
-        square: '',
-        theme: undefined as unknown as MarketTheme,
-        totalDesks: 0,
-        assignedDesks: 0
-      };
-    } catch (error) {
-      console.error('Errore durante il salvataggio del mercatino:', error);
-    }
   }
 }
